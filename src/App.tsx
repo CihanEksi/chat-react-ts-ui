@@ -1,5 +1,6 @@
 import { Container, CssBaseline, ThemeProvider, createTheme } from "@mui/material"
-import Auth from "./components/Auth"
+import { RouterProvider } from "react-router-dom"
+import router from "./Routes/Routes"
 
 const darkTheme = createTheme({
   palette: {
@@ -12,7 +13,9 @@ const App = () => {
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
       <Container>
-        <Auth />
+        <RouterProvider
+          router={router}
+        />
       </Container>
     </ThemeProvider>
   )
