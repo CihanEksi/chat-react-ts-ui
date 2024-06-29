@@ -12,7 +12,8 @@ const App = () => {
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
-      <Container>
+      <Container
+      >
         <RouterProvider
           router={router}
         />
