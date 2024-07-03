@@ -1,26 +1,39 @@
-import { Link } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 import Auth from "./Auth";
-import { Link as MULink } from "@mui/material"
+import Link from "@mui/material/Link";
+import useCreateUser from "../hooks/useCreateUser";
 
-const Signup = () => {
-    return (
-        <Auth
-            submitLabel="Signup"
-            onSubmit={async (credentials) => console.log(credentials)}
-        >
-               <Link 
-                to="/signup"
-                style={{
-                        alignSelf:"center"
-                    }}
-                >
-                <MULink>
-                    Do you have an account? Login.
-                </MULink>
-            </Link>
-        </Auth>
-
-    )
+interface SubmitParams {
+  email: string;
+  password: string;
 }
+const Signup = () => {
+  const [createUser] = useCreateUser();
+
+  const onSubmit = async ({ email, password }: SubmitParams) => {
+    await createUser({
+      variables: {
+        createUserInput: {
+          email: email,
+          password: password,
+        },
+      },
+    });
+  };
+
+  return (
+    <Auth submitLabel="Signup" onSubmit={onSubmit}>
+      <Link
+        to="/login"
+        style={{
+          alignSelf: "center",
+        }}
+        component={RouterLink}
+      >
+        Do you have an account? Login.
+      </Link>
+    </Auth>
+  );
+};
 
 export default Signup;
