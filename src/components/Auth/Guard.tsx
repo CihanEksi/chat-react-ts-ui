@@ -18,7 +18,7 @@ const Guard = ({ children }: GuardProps) => {
     if (managedCondition) {
       window.location.href = "/login";
     }
-  }, []);
+  }, [managedCondition]);
 
   if (managedCondition) {
     return <></>; // Return nothing if the condition is met and avoid rendering the children
