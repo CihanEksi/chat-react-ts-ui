@@ -1,14 +1,27 @@
-import { Container, CssBaseline, ThemeProvider, createTheme } from "@mui/material"
-import { RouterProvider } from "react-router-dom"
-import router from "./Routes/Routes"
-import { ApolloProvider } from "@apollo/client"
-import client from "./constants/apollo-client"
+import {
+  Container,
+  CssBaseline,
+  ThemeProvider,
+  createTheme,
+} from "@mui/material";
+import { RouterProvider } from "react-router-dom";
+import router from "./Routes/Routes";
+import { ApolloProvider } from "@apollo/client";
+import client from "./constants/apollo-client";
+import Guard from "./components/Auth/Guard";
+import { loadErrorMessages, loadDevMessages } from "@apollo/client/dev";
+
+if (process.env.NODE_ENV === "development") {
+  // Adds messages only in a dev environment
+  loadDevMessages();
+  loadErrorMessages();
+}
 
 const darkTheme = createTheme({
   palette: {
     mode: "dark",
-  }
-})
+  },
+});
 
 const App = () => {
   return (
@@ -16,13 +29,13 @@ const App = () => {
       <ThemeProvider theme={darkTheme}>
         <CssBaseline />
         <Container>
-          <RouterProvider
-            router={router}
-          />
+          <Guard>
+            <RouterProvider router={router} />
+          </Guard>
         </Container>
       </ThemeProvider>
     </ApolloProvider>
-  )
-}
+  );
+};
 
-export default App
+export default App;
