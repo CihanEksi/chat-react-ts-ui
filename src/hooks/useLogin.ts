@@ -2,6 +2,8 @@ import { useState } from "react";
 import { API_URL } from "../constants/urls";
 // import { useGetMe } from "./useGetMe";
 import useGeneralStore from "../managers/stateManager/general.zustand";
+import { LOCAL_STORAGE_KEYS } from "../constants/local-storage-keys";
+import router from "../routes/Routes";
 interface LoginRequest {
   email: string;
   password: string;
@@ -10,7 +12,7 @@ interface LoginRequest {
 export const useLogin = () => {
   const [error, setError] = useState<boolean>();
   const [errorMessage, setErrorMessage] = useState<string>();
-  const {setToken,setMe} = useGeneralStore((state) => state);
+  const { setToken, setMe } = useGeneralStore((state) => state);
 
   const login = async (request: LoginRequest) => {
     try {
@@ -50,6 +52,12 @@ export const useLogin = () => {
       setToken(token);
       setMe(user);
 
+      const getPrevPath = localStorage.getItem(LOCAL_STORAGE_KEYS.prevPage);
+      
+      if (getPrevPath) {
+        router.navigate(getPrevPath);
+      }
+      
     } catch (error) {
       setError(true);
       setErrorMessage("An error occurred");

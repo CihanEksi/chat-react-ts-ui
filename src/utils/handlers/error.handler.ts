@@ -10,7 +10,7 @@ const extractErrorMessages = (err: unknown | Error | CustomGqlError) => {
   if (!(err as CustomGqlError).graphQLErrors) {
     return (err as Error).message ?? "An error occurred";
   }
-  const errorMessage = (err as CustomGqlError).graphQLErrors[0].message;
+  const errorMessage = (err as CustomGqlError).graphQLErrors[0]?.message ?? "An error occurred";
   const formattedErrorMessage = formatErrorMessage(errorMessage);
   return formattedErrorMessage;
 };

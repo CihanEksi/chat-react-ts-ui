@@ -1,8 +1,8 @@
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 import { User } from "../../models/User.model";
-
-const storageName = "general-storage";
+import { generalStorage } from "../../constants/state.keys";
+const storageName = generalStorage;
 
 interface GeneralState {
   me: User | null;
