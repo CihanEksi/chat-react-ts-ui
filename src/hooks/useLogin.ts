@@ -27,7 +27,6 @@ export const useLogin = () => {
       const dataMessage = data.message;
 
       if (!res.ok) {
-        console.log("error", res);
         setError(true);
 
         if (dataMessage) {
