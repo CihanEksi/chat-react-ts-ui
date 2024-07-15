@@ -5,7 +5,7 @@ import {
   createTheme,
 } from "@mui/material";
 import { RouterProvider } from "react-router-dom";
-import router from "./Routes/Routes";
+import router from "./routes/Routes";
 import { ApolloProvider } from "@apollo/client";
 import client from "./constants/apollo-client";
 import Guard from "./components/Auth/Guard";

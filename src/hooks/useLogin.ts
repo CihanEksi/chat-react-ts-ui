@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { API_URL } from "../constants/urls";
-import { useGetMe } from "./useGetMe";
+// import { useGetMe } from "./useGetMe";
+import useGeneralStore from "../managers/stateManager/general.zustand";
 interface LoginRequest {
   email: string;
   password: string;
@@ -9,7 +10,7 @@ interface LoginRequest {
 export const useLogin = () => {
   const [error, setError] = useState<boolean>();
   const [errorMessage, setErrorMessage] = useState<string>();
-  const { refetch } = useGetMe();
+  const {setToken,setMe} = useGeneralStore((state) => state);
 
   const login = async (request: LoginRequest) => {
     try {
@@ -44,8 +45,11 @@ export const useLogin = () => {
 
       setError(false);
       const token = data.token;
+      const user = data.user;
       localStorage.setItem("token", token);
-      refetch();
+      setToken(token);
+      setMe(user);
+
     } catch (error) {
       setError(true);
       setErrorMessage("An error occurred");
