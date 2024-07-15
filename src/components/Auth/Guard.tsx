@@ -20,7 +20,7 @@ const Guard = ({ children }: GuardProps) => {
     }
   }, [managedCondition]);
 
-  if (managedCondition && !includedCurrentRoute) {
+  if (managedCondition) {
     return <></>; // Return nothing if the condition is met and avoid rendering the children
   }
 
