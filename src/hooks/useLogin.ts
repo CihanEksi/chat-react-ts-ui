@@ -2,8 +2,6 @@ import { useState } from "react";
 import { API_URL } from "../constants/urls";
 // import { useGetMe } from "./useGetMe";
 import useGeneralStore from "../managers/stateManager/general.zustand";
-import { LOCAL_STORAGE_KEYS } from "../constants/local-storage-keys";
-import router from "../routes/Routes";
 interface LoginRequest {
   email: string;
   password: string;
@@ -50,12 +48,6 @@ export const useLogin = () => {
       localStorage.setItem("token", token);
       setToken(token);
       setMe(user);
-
-      const getPrevPath = localStorage.getItem(LOCAL_STORAGE_KEYS.prevPage);
-      
-      if (getPrevPath) {
-        router.navigate(getPrevPath);
-      }
       
     } catch (error) {
       setError(true);

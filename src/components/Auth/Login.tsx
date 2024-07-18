@@ -5,6 +5,7 @@ import { useLogin } from "../../hooks/useLogin";
 import useGeneralStore from "../../managers/stateManager/general.zustand";
 import { useEffect } from "react";
 import router from "../../routes/Routes";
+import { LOCAL_STORAGE_KEYS } from "../../constants/local-storage-keys";
 
 const Login = () => {
   const { login, error, errorMessage } = useLogin();
@@ -12,7 +13,15 @@ const Login = () => {
 
   useEffect(() => {
     if (me) {
-      router.navigate("/");
+      let navigateTo = "/";
+      const getPrevPath = localStorage.getItem(LOCAL_STORAGE_KEYS.prevPage);
+
+      if (getPrevPath) {
+        navigateTo = getPrevPath;
+        localStorage.removeItem(LOCAL_STORAGE_KEYS.prevPage);
+      }
+
+      router.navigate(navigateTo);
     }
   }, [me]);
 
