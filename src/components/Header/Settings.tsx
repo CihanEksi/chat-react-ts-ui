@@ -7,8 +7,10 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import React, { useCallback } from "react";
 import { onLogout } from "../../utils/logout";
+import useGeneralStore from "../../managers/stateManager/general.zustand";
 
 function Settings() {
+  const me = useGeneralStore((state) => state.me);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
@@ -22,7 +24,7 @@ function Settings() {
   };
 
   const logOut = useCallback(() => {
-    onLogout()
+    onLogout();
     //handleCloseUserMenu();
   }, []);
 
@@ -32,6 +34,8 @@ function Settings() {
       onClick: logOut,
     },
   ];
+
+  if (!me) return null;
 
   return (
     <>
