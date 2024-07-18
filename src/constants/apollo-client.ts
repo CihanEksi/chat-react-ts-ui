@@ -1,9 +1,9 @@
 import { ApolloClient, HttpLink, InMemoryCache } from "@apollo/client";
 import { API_URL } from "./urls";
 import { onError } from "@apollo/client/link/error";
-import { stateKeysToClean } from "../constants/state.keys";
 import { excludedRoutes } from "./excluded-routes";
 import { LOCAL_STORAGE_KEYS } from "./local-storage-keys";
+import { onLogout } from "../utils/logout";
 
 const link = onError((error) => {
   if (error.graphQLErrors) {
@@ -15,10 +15,7 @@ const link = onError((error) => {
     if (isExcludedPath) return;
 
     if (statusCode === 401) {
-      stateKeysToClean.forEach((key: string) => {
-        localStorage.removeItem(key); // it is not turn the initial state it is clean all states to protect the user data
-      });
-      window.location.href = "/login";
+      onLogout();
     }
   }
 });

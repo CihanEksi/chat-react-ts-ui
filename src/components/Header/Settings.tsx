@@ -5,9 +5,8 @@ import Menu from "@mui/material/Menu";
 import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import React from "react";
-
-const settings = ["Logout"];
+import React, { useCallback } from "react";
+import { onLogout } from "../../utils/logout";
 
 function Settings() {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
@@ -21,6 +20,19 @@ function Settings() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const logOut = useCallback(() => {
+    onLogout()
+    //handleCloseUserMenu();
+  }, []);
+
+  const settings = [
+    {
+      name: "Logout",
+      onClick: logOut,
+    },
+  ];
+
   return (
     <>
       <Box sx={{ flexGrow: 0 }}>
@@ -46,8 +58,8 @@ function Settings() {
           onClose={handleCloseUserMenu}
         >
           {settings.map((setting) => (
-            <MenuItem key={setting} onClick={handleCloseUserMenu}>
-              <Typography textAlign="center">{setting}</Typography>
+            <MenuItem key={setting.name} onClick={setting.onClick}>
+              <Typography textAlign="center">{setting.name}</Typography>
             </MenuItem>
           ))}
         </Menu>
