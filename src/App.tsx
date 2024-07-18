@@ -10,6 +10,7 @@ import { ApolloProvider } from "@apollo/client";
 import client from "./constants/apollo-client";
 import Guard from "./components/Auth/Guard";
 import { loadErrorMessages, loadDevMessages } from "@apollo/client/dev";
+import Header from "./components/Header/Header";
 
 if (process.env.NODE_ENV === "development") {
   // Adds messages only in a dev environment
@@ -28,6 +29,7 @@ const App = () => {
     <ApolloProvider client={client}>
       <ThemeProvider theme={darkTheme}>
         <CssBaseline />
+        <Header />
         <Container>
           <Guard>
             <RouterProvider router={router} />
