@@ -1,0 +1,10 @@
+{
+    "auth": {
+        "login": {
+            "invalidEmailOrPassword": "Invalid email or password"
+        }
+    },
+    "errors": {
+        "unknownError": "An error occurred!"
+    }
+}

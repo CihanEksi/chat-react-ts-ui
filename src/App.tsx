@@ -11,6 +11,8 @@ import client from "./constants/apollo-client";
 import Guard from "./components/Auth/Guard";
 import { loadErrorMessages, loadDevMessages } from "@apollo/client/dev";
 import Header from "./components/Header/Header";
+import SnackBar from "./components/SnackBar/SnackBar";
+
 
 if (process.env.NODE_ENV === "development") {
   // Adds messages only in a dev environment
@@ -34,6 +36,7 @@ const App = () => {
           <Guard>
             <RouterProvider router={router} />
           </Guard>
+        <SnackBar />
         </Container>
       </ThemeProvider>
     </ApolloProvider>
