@@ -14,6 +14,7 @@ import { loadErrorMessages, loadDevMessages } from "@apollo/client/dev";
 import Header from "./components/Header/Header";
 import SnackBar from "./components/SnackBar/SnackBar";
 import ChatList from "./components/Chat/ChatList";
+import usePath from "./hooks/usePath";
 
 if (process.env.NODE_ENV === "development") {
   // Adds messages only in a dev environment
@@ -28,27 +29,38 @@ const darkTheme = createTheme({
 });
 
 const App = () => {
+  const { path } = usePath();
+  const defaultPath = path === "/";
+
   return (
     <ApolloProvider client={client}>
       <ThemeProvider theme={darkTheme}>
         <CssBaseline />
         <Header />
-        <Grid container>
-          <Grid item md={3}>
-            <ChatList />
-          </Grid>
-          <Grid item md={9}>
-            <Container>
-              <Guard>
-                <RouterProvider router={router} />
-              </Guard>
-              <SnackBar />
-            </Container>
-          </Grid>
-        </Grid>
+        <Guard>
+          {defaultPath ? (
+            <Grid container>
+              <Grid item md={3}>
+                <ChatList />
+              </Grid>
+              <Grid item md={9}>
+                <Routes />
+              </Grid>
+            </Grid>
+          ) : (
+            <Routes />
+          )}
+        </Guard>
       </ThemeProvider>
     </ApolloProvider>
   );
 };
+
+const Routes = () => (
+  <Container>
+    <RouterProvider router={router} />
+    <SnackBar />
+  </Container>
+);
 
 export default App;

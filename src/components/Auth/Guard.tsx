@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { excludedRoutes } from "../../constants/excluded-routes";
 import useGeneralStore from "../../managers/stateManager/general.zustand";
+import usePath from "../../hooks/usePath";
 
 interface GuardProps {
   children: JSX.Element;
@@ -8,8 +9,9 @@ interface GuardProps {
 
 const Guard = ({ children }: GuardProps) => {
   const me = useGeneralStore((state) => state.me);
+  const { path } = usePath();
   const includedCurrentRoute = excludedRoutes.includes(
-    window.location.pathname // we are using window to get the current path because Guard is a top-level component
+    path
   );
   const isUserLoggedIn = me !== null;
   const managedCondition = !includedCurrentRoute && !isUserLoggedIn;
